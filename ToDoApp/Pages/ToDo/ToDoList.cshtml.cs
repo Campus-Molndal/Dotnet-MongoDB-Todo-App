@@ -21,7 +21,13 @@ public class ToDoListModel : PageModel
     public async Task<IActionResult> OnGetAsync()
     {
         ToDoItems = await _toDoService.GetAllAsync();
-        Console.WriteLine("OnGetAsync: {ToDoItems}");
+        foreach (var item in ToDoItems)
+        {
+            Console.WriteLine("Title: {0}", item.Title);
+            Console.WriteLine("Details: {0}", item.Details);
+            Console.WriteLine("IsCompleted: {0}", item.IsCompleted);
+            Console.WriteLine("-----------");
+        }
         return Page();
     }
 
