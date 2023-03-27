@@ -1,0 +1,90 @@
+@page
+@model ToDoApp.Pages.ToDo.ToDoListModel
+
+@{
+    ViewData["Title"] = "ToDo List";
+}
+<h1>@ViewData["Title"]</h1>
+
+<!-- Show this form if a ToDo item is selected for editing -->
+
+@if (Model.EditingItem != null)
+{
+    <p>Edit</p>
+    <form method="post" asp-page-handler="Update">
+        <input type="hidden" name="editingId" value="@Model.EditingItem.Id" />
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" value="@Model.EditingItem.Title"/>
+        </div>
+        <div>
+            <label for="details">Details:</label>
+            <textarea name="details" id="details">@Model.EditingItem.Details</textarea>
+        </div>
+        <div>
+        <label for="isCompleted">Is Completed:</label>
+            <input type="checkbox" name="iscompleted" id="iscompleted" value="true" @(Model.EditingItem.IsCompleted ? "checked" : "") />
+        </div>
+        <button type="submit">Update ToDo Item</button>
+    </form>
+
+}
+
+<hr />
+
+<!-- This form is used to create a new ToDo item -->
+
+<form method="post">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title" />
+    </div>
+    <div>
+        <label for="details">Details:</label>
+        <textarea name="details" id="details"></textarea>
+    </div>
+    <button type="submit">Add ToDo Item</button>
+</form>
+
+<hr />
+
+<!-- Table showing a list of ToDo items -->
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Details</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ToDoItems != null)
+        {
+            @foreach (var item in Model.ToDoItems)
+            {
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@item.Details</td>
+                    <td>@(item.IsCompleted ? "Completed" : "Not Completed")</td>
+                    <td>
+                        <form method="post" asp-page-handler="Edit">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit">Edit</button>
+                        </form>
+                        <form method="post" asp-page-handler="ToggleStatus">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit">Toggle Status</button>
+                        </form>
+                        <form method="post" asp-page-handler="Delete">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
