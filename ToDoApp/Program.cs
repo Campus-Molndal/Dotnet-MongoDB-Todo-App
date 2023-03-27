@@ -6,7 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Register the JsonToDoService as the implementation for IToDoService
-builder.Services.AddSingleton<IToDoService, JsonToDoService>(); // Add this line
+//builder.Services.AddSingleton<IToDoService, JsonToDoService>(); // Add this line
+builder.Services.AddSingleton<IToDoService, MongoDbToDoService>(); // Add this line
+
 
 var app = builder.Build();
 

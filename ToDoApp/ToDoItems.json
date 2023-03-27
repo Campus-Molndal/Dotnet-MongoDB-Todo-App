@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "64221ba803bd96c2d23177f9"
+  },
+  "Title": "Buy groceries",
+  "IsCompleted": true,
+  "Details": "Milk, bread, eggs, and fruits"
+},{
+  "_id": {
+    "$oid": "64221ba803bd96c2d23177fa"
+  },
+  "Title": "Finish homework",
+  "IsCompleted": false,
+  "Details": "Math and history assignments"
+},{
+  "_id": {
+    "$oid": "64221ba803bd96c2d23177fc"
+  },
+  "Title": "Hej",
+  "IsCompleted": true,
+  "Details": "Hopp"
+}]
