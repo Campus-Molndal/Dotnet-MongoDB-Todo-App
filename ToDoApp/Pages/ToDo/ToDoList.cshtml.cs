@@ -18,16 +18,12 @@ public class ToDoListModel : PageModel
 
     public IEnumerable<ToDoItem> ToDoItems { get; private set; }
 
+    public ToDoItem? EditingItem { get; set; } = null;
+
     public async Task<IActionResult> OnGetAsync()
     {
+        Console.WriteLine("OnGetAsync");
         ToDoItems = await _toDoService.GetAllAsync();
-        foreach (var item in ToDoItems)
-        {
-            Console.WriteLine("Title: {0}", item.Title);
-            Console.WriteLine("Details: {0}", item.Details);
-            Console.WriteLine("IsCompleted: {0}", item.IsCompleted);
-            Console.WriteLine("-----------");
-        }
         return Page();
     }
 
@@ -40,6 +36,7 @@ public class ToDoListModel : PageModel
 
     public async Task<IActionResult> OnPostToggleStatusAsync(string id)
     {
+        Console.WriteLine("Toggle ID: " + id);
         var item = await _toDoService.GetByIdAsync(id);
         if (item != null)
         {
@@ -51,7 +48,23 @@ public class ToDoListModel : PageModel
 
     public async Task<IActionResult> OnPostDeleteAsync(string id)
     {
+        Console.WriteLine("Delete ID: " + id);
         await _toDoService.DeleteAsync(id);
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostEditAsync(string id)
+    {
+        Console.WriteLine("Editing ID: " + id);
+        EditingItem = await _toDoService.GetByIdAsync(id);
+        ToDoItems = await _toDoService.GetAllAsync();
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostUpdateAsync(string editingId, string title, string details, bool iscompleted)
+    {
+        var updatedItem = new ToDoItem { Id = editingId, Title = title, Details = details, IsCompleted = iscompleted };
+        await _toDoService.UpdateAsync(editingId, updatedItem);
         return RedirectToPage();
     }
 
