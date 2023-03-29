@@ -7,8 +7,20 @@ builder.Services.AddRazorPages();
 
 // Register the JsonToDoService as the implementation for IToDoService
 //builder.Services.AddSingleton<IToDoService, JsonToDoService>(); // Add this line
-builder.Services.AddSingleton<IToDoService, MongoDbToDoService>(); // Add this line
+//builder.Services.AddSingleton<IToDoService, MongoDbToDoService>(); // Add this line
 
+// Register the appropriate implementation for IToDoService based on the environment variable value
+var todoServiceImplementation = Environment.GetEnvironmentVariable("TODO_SERVICE_IMPLEMENTATION");
+switch (todoServiceImplementation)
+{
+    case "MongoDb":
+        builder.Services.AddSingleton<IToDoService, MongoDbToDoService>();
+        break;
+    case "Json":
+    default:
+        builder.Services.AddSingleton<IToDoService, JsonToDoService>();
+        break;
+}
 
 var app = builder.Build();
 

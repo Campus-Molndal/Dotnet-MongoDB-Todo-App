@@ -12,15 +12,9 @@
     "Details": "Math and history assignments"
   },
   {
-    "Id": "1e053684-a5df-4861-8b59-ab48e8bd6cf1",
-    "Title": "asdad",
+    "Id": "5d4ddf6d-15cd-4aae-ae5d-295c087691bf",
+    "Title": "This is JSON",
     "IsCompleted": false,
-    "Details": "ertertertertertertertertertertertertertert"
-  },
-  {
-    "Id": "1b73d734-e18c-4dd1-bda9-122989ee4d64",
-    "Title": "erterte",
-    "IsCompleted": true,
-    "Details": "rtertertert"
+    "Details": "This is saved in a json file"
   }
 ]
